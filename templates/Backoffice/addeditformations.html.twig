@@ -1,0 +1,43 @@
+{% extends 'Backoffice/basebackoffice.html.twig' %}
+
+{% block admin_content %}
+
+<h2>{{ form.vars.value.id ? 'Modifier' : 'Ajouter' }} une formation</h2>
+
+{{ form_start(form) }}
+
+<div class="mb-3">
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre de la formation'}}) }}
+    {{ form_errors(form.title) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description (facultatif)'}}) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.playlist) }}
+    {{ form_widget(form.playlist, {'attr': {'class': 'form-select'}}) }}
+    {{ form_errors(form.playlist) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.categories) }}
+    {{ form_widget(form.categories, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
+    {{ form_errors(form.categories) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.date) }}
+    {{ form_widget(form.date, {'attr': {'class': 'form-control', 'max': "now"}}) }}
+    {{ form_errors(form.date) }}
+</div>
+
+<button class="btn btn-success">{{ form.vars.value.id ? 'Mettre à jour' : 'Ajouter' }}</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

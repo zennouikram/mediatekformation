@@ -15,26 +15,26 @@ use Symfony\Component\Routing\Annotation\Route;
  * @author emds
  */
 class PlaylistsController extends AbstractController {
-    
+    private const PLAYLISTS_TEMPLATE = 'pages/playlists.html.twig';
     /**
-     * 
+     *
      * @var PlaylistRepository
      */
     private $playlistRepository;
     
     /**
-     * 
+     *
      * @var FormationRepository
      */
     private $formationRepository;
     
     /**
-     * 
+     *
      * @var CategorieRepository
      */
-    private $categorieRepository;    
+    private $categorieRepository;
     
-    function __construct(PlaylistRepository $playlistRepository, 
+   public function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
             FormationRepository $formationRespository) {
         $this->playlistRepository = $playlistRepository;
@@ -50,49 +50,59 @@ class PlaylistsController extends AbstractController {
     public function index(): Response{
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::PLAYLISTS_TEMPLATE, [
             'playlists' => $playlists,
-            'categories' => $categories            
+            'categories' => $categories
         ]);
     }
 
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response{
-        switch($champ){
-            case "name":
+        switch ($champ) {
+            case 'name':
                 $playlists = $this->playlistRepository->findAllOrderByName($ordre);
                 break;
+            case 'count':
+                // sort by number of formations
+                $playlists = $this->playlistRepository->findAllOrderByFormationsCount($ordre);
+                break;
+            default:
+                // default ordering when unknown field requested
+                $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         }
+
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::PLAYLISTS_TEMPLATE, [
             'playlists' => $playlists,
-            'categories' => $categories            
+            'categories' => $categories
         ]);
-    }          
+    }
 
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::PLAYLISTS_TEMPLATE, [
             'playlists' => $playlists,
-            'categories' => $categories,            
+            'categories' => $categories,
             'valeur' => $valeur,
             'table' => $table
         ]);
-    }  
+    }
 
     #[Route('/playlists/playlist/{id}', name: 'playlists.showone')]
     public function showOne($id): Response{
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
+        $formationsCount = $this->playlistRepository->countFormationsForPlaylist($id);
         return $this->render("pages/playlist.html.twig", [
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
-            'playlistformations' => $playlistFormations
-        ]);        
-    }       
+            'playlistformations' => $playlistFormations,
+            'formationsCount' => $formationsCount
+        ]);
+    }
     
 }

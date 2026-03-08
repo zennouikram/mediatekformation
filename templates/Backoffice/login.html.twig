@@ -1,0 +1,34 @@
+{% extends 'Backoffice/basebackoffice.html.twig' %}
+
+{% block admin_content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+
+        <h2 class="text-center mb-4">Connexion administrateur</h2>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ path('admin_login') }}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nom d'utilisateur</label>
+                <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input type="password" id="password" name="_password" class="form-control" required>
+            </div>
+
+            {# CSRF Token pour la sécurité #}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

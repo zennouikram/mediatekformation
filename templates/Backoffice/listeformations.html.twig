@@ -1,0 +1,52 @@
+{% extends 'Backoffice/basebackoffice.html.twig' %}
+
+{% block admin_content %}
+<h2>Liste des formations</h2>
+
+<a href="{{ path('admin_add_formation') }}" class="btn btn-primary mb-3">Ajouter une formation</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Playlist</th>
+            <th>Catégories</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.title }}</td>
+                <td>{{ formation.playlist ? formation.playlist.name : '-' }}</td>
+                <td>
+                    {% for category in formation.categories %}
+                        <span class="badge bg-secondary">{{ category.name }}</span>
+                    {% else %}
+                        -
+                    {% endfor %}
+                </td>
+                <td>{{ formation.date|date('d/m/Y') }}</td>
+                <td>
+                    <a href="{{ path('admin_edit_formation', {id: formation.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+
+                    <form method="post"
+                          action="{{ path('admin_delete_formation', {id: formation.id}) }}"
+                          style="display:inline;"
+                          onsubmit="return confirm('Confirmer la suppression ?');">
+
+                        <input type="hidden" name="_token"
+                               value="{{ csrf_token('delete' ~ formation.id) }}">
+                        <button class="btn btn-sm btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune formation trouvée.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

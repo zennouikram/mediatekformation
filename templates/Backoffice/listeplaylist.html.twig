@@ -1,0 +1,48 @@
+{% extends 'Backoffice/basebackoffice.html.twig' %}
+
+{% block admin_content %}
+<h2>Liste des playlists</h2>
+
+<a href="{{ path('admin_add_playlist') }}" class="btn btn-primary mb-3">Ajouter une playlist</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Formations liées</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for playlist in playlists %}
+            <tr>
+                <td>{{ playlist.name }}</td>
+                <td>{{ playlist.description }}</td>
+                <td>{{ playlist.formations|length }}</td>
+                <td>
+                    <a href="{{ path('admin_edit_playlist', {id: playlist.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+
+                    {% if playlist.formations|length == 0 %}
+                        <form method="post"
+                              action="{{ path('admin_delete_playlist', {id: playlist.id}) }}"
+                              style="display:inline;"
+                              onsubmit="return confirm('Confirmer la suppression ?');">
+
+                            <input type="hidden" name="_token"
+                                   value="{{ csrf_token('delete' ~ playlist.id) }}">
+                            <button class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    {% else %}
+                        <span class="badge bg-secondary">Formations attachées</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Aucune playlist trouvée.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

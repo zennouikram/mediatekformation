@@ -1,12 +1,22 @@
 {% extends "basefront.html.twig" %}
 {% block body %}
-    <table class="table table-striped">
+    <table class="table table-striped"
+    description="Liste des playlists avec tri et filtrage">
         <thead>
             <tr>
                 <th class="text-left align-top" scope="col">
                     playlist<br />
-                    <a href="{{ path('playlists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
-                    <a href="{{ path('playlists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    <form method="GET" action="{{ path('playlists.sort', {champ:'name', ordre:'ASC'}) }}" class="d-inline">
+                        <button type="submit" class="btn btn-info btn-sm" aria-label="Trier par nom croissant">
+                            &lt;
+                        </button>
+                    </form>
+
+                    <form method="GET" action="{{ path('playlists.sort', {champ:'name', ordre:'DESC'}) }}" class="d-inline">
+                        <button type="submit" class="btn btn-info btn-sm" aria-label="Trier par nom décroissant">
+                            &gt;
+                        </button>
+                    </form>
                     <form class="form-inline mt-1" method="POST" action="{{ path('playlists.findallcontain', {champ:'name'}) }}">
                         <div class="form-group mr-1 mb-2">
                             <input type="text" class="sm" name="recherche" 
@@ -33,6 +43,19 @@
                     </form>            
                 </th>
                 <th class="text-center align-top" scope="col">
+                    nombre de formations<br />
+                    <form method="GET" action="{{ path('playlists.sort', {champ:'count', ordre:'ASC'}) }}" class="d-inline">
+                        <button type="submit" class="btn btn-info btn-sm" aria-label="Trier par nombre croissant">
+                            &lt;
+                        </button>
+                    </form>
+                    <form method="GET" action="{{ path('playlists.sort', {champ:'count', ordre:'DESC'}) }}" class="d-inline">
+                        <button type="submit" class="btn btn-info btn-sm" aria-label="Trier par nombre décroissant">
+                            &gt;
+                        </button>
+                    </form>
+                </th>
+                <th class="text-center align-top" scope="col">
                     &nbsp;
                 </th>				
             </tr>
@@ -53,8 +76,9 @@
                                 {% for c in 0..categories|length-1 %}
                                     &nbsp;{{ categories[c] }}                                  
                                 {% endfor %}
-                            {% endif %}
-                        </td>            					
+                            {% endif %}                        </td>
+                        <td class="text-center">
+                            {{ playlists[k].getFormationsCount() }}                        </td>            					
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
                         </td> 					

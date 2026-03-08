@@ -6,8 +6,11 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[UniqueEntity('name', message: 'Cette catégorie existe déjà.')]
 class Categorie
 {
     #[ORM\Id]
@@ -15,12 +18,16 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50, unique: true)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: "Le nom doit contenir au moins 2 caractères.",
+        maxMessage: "Le nom ne peut pas dépasser 50 caractères."
+    )]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, Formation>
-     */
     #[ORM\ManyToMany(targetEntity: Formation::class, mappedBy: 'categories')]
     private Collection $formations;
 
@@ -42,13 +49,9 @@ class Categorie
     public function setName(?string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Formation>
-     */
     public function getFormations(): Collection
     {
         return $this->formations;

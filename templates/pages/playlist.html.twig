@@ -2,7 +2,7 @@
 {% block body %}
     <div class="row mt-3">
         <div class="col">
-            <h4 class="text-info mt-5">{{ playlist.name }}</h4>
+            <h4 class="text-info mt-5">{{ playlist.name }}{% if formationsCount is defined %} ({{ formationsCount }} formations){% endif %}</h4>
             <strong>catégories : </strong>
                 <!-- boucle pour afficher les catégories -->
                 {% set anccategorie = '' %}
@@ -20,7 +20,7 @@
                     <div class="col-md-auto">
                         {% if formation.miniature %}
                             <a href="{{ path('formations.showone', {id:formation.id}) }}">
-                                <img src="{{ formation.miniature }}">
+                                <img src="{{ formation.miniature }}" alt="{{ formation.title }}">
                             </a>
                         {% endif %}  
                     </div>
