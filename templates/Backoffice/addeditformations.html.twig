@@ -25,15 +25,21 @@
 </div>
 
 <div class="mb-3">
-    {{ form_label(form.categories) }}
-    {{ form_widget(form.categories, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
-    {{ form_errors(form.categories) }}
+    {{ form_label(form.videoId) }}
+    {{ form_widget(form.videoId, {'attr': {'class': 'form-control', 'placeholder': 'ID de la vidéo YouTube'}}) }}
+    {{ form_errors(form.videoId) }}
 </div>
 
 <div class="mb-3">
-    {{ form_label(form.date) }}
-    {{ form_widget(form.date, {'attr': {'class': 'form-control', 'max': "now"}}) }}
-    {{ form_errors(form.date) }}
+    {{ form_label(form.publishedAt) }}
+    {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.publishedAt) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.categories) }}
+    {{ form_widget(form.categories, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
+    {{ form_errors(form.categories) }}
 </div>
 
 <button class="btn btn-success">{{ form.vars.value.id ? 'Mettre à jour' : 'Ajouter' }}</button>

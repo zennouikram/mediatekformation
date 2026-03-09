@@ -27,7 +27,7 @@
                         -
                     {% endfor %}
                 </td>
-                <td>{{ formation.date|date('d/m/Y') }}</td>
+                <td>{{ formation.publishedAt|date('d/m/Y') }}</td>
                 <td>
                     <a href="{{ path('admin_edit_formation', {id: formation.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
 

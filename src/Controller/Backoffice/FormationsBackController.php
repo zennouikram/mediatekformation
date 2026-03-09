@@ -58,7 +58,7 @@ class FormationsBackController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($formation->getDate() > new \DateTime()) {
+            if ($formation->getPublishedAt() && $formation->getPublishedAt() > new \DateTime()) {
                 $this->addFlash('error', 'La date ne peut pas être postérieure à aujourd’hui.');
                 return $this->redirectToRoute('admin_add_formation');
             }
@@ -86,7 +86,7 @@ class FormationsBackController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($formation->getDate() > new \DateTime()) {
+            if ($formation->getPublishedAt() && $formation->getPublishedAt() > new \DateTime()) {
                 $this->addFlash('error', 'La date ne peut pas être postérieure à aujourd’hui.');
                 return $this->redirectToRoute('admin_edit_formation', ['id' => $formation->getId()]);
             }

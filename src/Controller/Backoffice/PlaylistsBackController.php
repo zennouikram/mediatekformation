@@ -29,7 +29,7 @@ class PlaylistsBackController extends AbstractController
 
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
 
-        return $this->render('Backoffice/listeplaylists.html.twig', [
+        return $this->render('Backoffice/listeplaylist.html.twig', [
             'playlists' => $playlists
         ]);
     }

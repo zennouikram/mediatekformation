@@ -28,7 +28,7 @@ class CategoriesBackController extends AbstractController
 
         $categories = $this->categorieRepository->findAll();
 
-        return $this->render('Backoffice/categories.html.twig', [
+        return $this->render('Backoffice/catégories.html.twig', [
             'categories' => $categories
         ]);
     }

@@ -16,7 +16,7 @@ class LoginController extends AbstractController
         // Erreur de connexion éventuelle
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('admin/login.html.twig', [
+        return $this->render('Backoffice/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
