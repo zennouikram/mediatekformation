@@ -29,7 +29,7 @@ class CategorieRepository extends ServiceEntityRepository
     }
     
     /**
-     * Retourne la liste des catégories des formations d'une playlist
+     * Retourne la liste des categories des formations d'une playlist
      * @param type $idPlaylist
      * @return array
      */

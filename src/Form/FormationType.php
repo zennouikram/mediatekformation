@@ -46,7 +46,7 @@ class FormationType extends AbstractType
             ->add('categories', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
-                'label' => 'Catégories',
+                'label' => 'Categories',
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,

@@ -28,7 +28,7 @@ class CategoriesBackController extends AbstractController
 
         $categories = $this->categorieRepository->findAll();
 
-        return $this->render('Backoffice/catégories.html.twig', [
+        return $this->render('Backoffice/categories.html.twig', [
             'categories' => $categories
         ]);
     }
@@ -50,7 +50,7 @@ class CategoriesBackController extends AbstractController
         $existing = $this->categorieRepository->findOneBy(['name' => $name]);
 
         if ($existing) {
-            $this->addFlash('error', 'Cette catégorie existe déjà.');
+            $this->addFlash('error', 'Cette categorie existe déjà.');
             return $this->redirectToRoute('admin_categories');
         }
 
@@ -60,7 +60,7 @@ class CategoriesBackController extends AbstractController
         $em->persist($categorie);
         $em->flush();
 
-        $this->addFlash('success', 'Catégorie ajoutée.');
+        $this->addFlash('success', 'Categorie ajoutée.');
         return $this->redirectToRoute('admin_categories');
     }
 
@@ -74,16 +74,16 @@ class CategoriesBackController extends AbstractController
             return $this->redirectToRoute('admin_categories');
         }
 
-        // Vérification : catégorie utilisée ?
+        // Vérification : categorie utilisée ?
         if (count($categorie->getFormations()) > 0) {
-            $this->addFlash('error', 'Impossible de supprimer une catégorie liée à une formation.');
+            $this->addFlash('error', 'Impossible de supprimer une categorie liée à une formation.');
             return $this->redirectToRoute('admin_categories');
         }
 
         $em->remove($categorie);
         $em->flush();
 
-        $this->addFlash('success', 'Catégorie supprimée.');
+        $this->addFlash('success', 'Categorie supprimée.');
         return $this->redirectToRoute('admin_categories');
     }
 }

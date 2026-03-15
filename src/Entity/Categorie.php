@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
-#[UniqueEntity('name', message: 'Cette catégorie existe déjà.')]
+#[UniqueEntity('name', message: 'Cette categorie existe déjà.')]
 class Categorie
 {
     #[ORM\Id]

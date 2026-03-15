@@ -3,8 +3,8 @@
     <div class="row mt-3">
         <div class="col">
             <h4 class="text-info mt-5">{{ playlist.name }}{% if formationsCount is defined %} ({{ formationsCount }} formations){% endif %}</h4>
-            <strong>catégories : </strong>
-                <!-- boucle pour afficher les catégories -->
+            <strong>categories : </strong>
+                <!-- boucle pour afficher les categories -->
                 {% set anccategorie = '' %}
                 {% for playlist in playlistcategories %}
                     {{ playlist.name }}&nbsp;
